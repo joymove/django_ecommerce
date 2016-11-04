@@ -28,7 +28,7 @@ class MainPageTest(TestCase):
 
     def test_returns_appropriate_html(self):
 	index = self.client.get('/')
-	self.assertEquals(index.status_code, 200)
+	self.assertEqual(index.status_code, 200)
 
     def test_uses_index_html_template(self):
 	index = self.client.get('/')
@@ -36,7 +36,7 @@ class MainPageTest(TestCase):
 
     def test_returns_exact_html(self):
 	index = self.client.get("/")
-	self.assertEquals(index.content, render_to_response("index.html").content)
+	self.assertEqual(index.content, render_to_response("index.html").content)
 
     def test_index_handles_logged_in_user(self):
 	# test logic will go here
@@ -58,7 +58,7 @@ class MainPageTest(TestCase):
 	request.session= {'user': '1'}
 	rep = index(request)
 	# verify the response returns the page for the logged in user
-	self.assertEquals(rep.content,render_to_response('user.html', {'user': user}).content)
+	self.assertEqual(rep.content,render_to_response('user.html', {'user': user}).content)
 	
 
 

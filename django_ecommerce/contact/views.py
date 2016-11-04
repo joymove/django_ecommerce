@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.template import RequestContext, loader
 from .forms import ContactView
 from django.contrib import messages
@@ -16,6 +17,6 @@ def contact(request):
             return HttpResponseRedirect('/')
     else:
         form = ContactView()
-    t = loader.get_template('contact.html')
-    c = RequestContext(request, {'form': form, })
-    return HttpResponse(t.render(c))
+        t = loader.get_template('contact/contact.html')
+        c = RequestContext(request, {'form': form, })
+        return HttpResponse(t.render(c))

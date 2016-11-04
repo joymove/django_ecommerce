@@ -1,8 +1,7 @@
 # Django settings for django_ecommerce project.
 
 import os
-from django.conf.urls import include, url
-from django.contrib import admin
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -19,8 +18,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'test.db'
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'django_db',
+        'USER': 'djangousr',
+        'PASSWORD': 'django',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -82,7 +85,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '!(1ty%c5a)0l0(p)kxl2igmbobx_64hqh&tv1=+s9@!@zez4o^'
+SECRET_KEY = 'wo54t*@&8^n6hkte9j91==xk$@ma1iypff38(&f!)&cots-zzo'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -100,6 +103,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'django_ecommerce.urls'
@@ -116,11 +121,14 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Config for django-debug-toolbar
+    'debug_toolbar',
     'main',
     'django.contrib.admin',
     'django.contrib.flatpages',
     'contact',
     'payments',
+    'url_test',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
@@ -154,8 +162,23 @@ LOGGING = {
     }
 }
 
-urlpatterns = [
-        url(r'^admin/', admin.site.urls),
-        url(r'', include('main.urls')),
-        
-        ]
+
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+# Django-debug-toolbar settings
+DEBUG_TOOLBAR_PANELS = [
+    'debug_toolbar.panels.versions.VersionsPanel',
+    'debug_toolbar.panels.timer.TimerPanel',
+    'debug_toolbar.panels.settings.SettingsPanel',
+    'debug_toolbar.panels.headers.HeadersPanel',
+    'debug_toolbar.panels.request.RequestPanel',
+    'debug_toolbar.panels.sql.SQLPanel',
+    'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+    'debug_toolbar.panels.templates.TemplatesPanel',
+    'debug_toolbar.panels.cache.CachePanel',
+    'debug_toolbar.panels.signals.SignalsPanel',
+    'debug_toolbar.panels.logging.LoggingPanel',
+    'debug_toolbar.panels.redirects.RedirectsPanel',
+   ]
+
+
+INTERNAL_IPS = ['127.0.0.1']
